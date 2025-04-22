@@ -2,15 +2,15 @@
 <launch>
     <!-- Load the pre-saved map -->
     <node pkg="map_server" type="map_server" name="map_server" args="$(find sick_scan_xd)/maps/r_lab2.yaml" output="screen">
-        <!-- Set the map frame id to "true_map" -->
+        <!-- Ensure the map is published in 'true_map' frame -->
         <param name="frame_id" value="true_map"/>
-        <!-- Remap the default "map" topic to "true_map" -->
+        <!-- Remap the default 'map' topic to 'true_map' -->
         <remap from="map" to="true_map"/>
     </node>
     
     <!-- AMCL Node -->
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
-        <!-- Use true_map as the global frame -->
+        <!-- Use 'true_map' as the global frame -->
         <param name="global_frame_id" value="true_map"/>
         <param name="odom_frame_id" value="odom"/>
         <param name="base_frame_id" value="base_link"/>
@@ -31,20 +31,22 @@
         <param name="update_min_d" value="0.2"/>
         <param name="update_min_a" value="0.2"/>
 
-        <!-- Adjusted Odometry Noise Parameters -->
-        <param name="odom_alpha1" value="0.00000001"/>
-        <param name="odom_alpha2" value="0.00000001"/>
-        <param name="odom_alpha3" value="0.00000001"/>
-        <param name="odom_alpha4" value="0.00000001"/>
-        <param name="odom_alpha5" value="0.00000001"/>
+        <!-- Odometry Noise Parameters -->
+        <param name="odom_alpha1" value="0.000001"/>
+        <param name="odom_alpha2" value="0.000001"/>
+        <param name="odom_alpha3" value="0.000001"/>
+        <param name="odom_alpha4" value="0.000001"/>
+        <param name="odom_alpha5" value="0.000001"/>
 
-        <!-- Additional Sensor Model Parameters -->
-        <param name="sigma_hit" value="0.1"/>
-        <param name="lambda_short" value="0.05"/>
-        <param name="z_hit" value="0.9"/>
-        <param name="z_short" value="0.05"/>
-        <param name="recovery_alpha_slow" value="0.0"/>
-        <param name="recovery_alpha_fast" value="0.0"/>
+        <!-- Laser Model Parameters -->
+        <param name="z_hit"         value="0.08"/>
+        <param name="z_short"       value="0.05"/>
+        <param name="lambda_short"  value="0.01"/>
+        <param name="sigma_hit"     value="0.02"/>
+
+        <!-- Adaptive Recovery Parameters -->
+        <param name="recovery_alpha_slow" value="0.005"/>
+        <param name="recovery_alpha_fast" value="0.1"/>
 
         <!-- Initial Pose -->
         <param name="initial_pose_x" value="0.0"/>
@@ -60,12 +62,43 @@
 
     <!-- RViz Visualization -->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find sick_scan_xd)/rviz/amcl_config.rviz" output="screen"/>
-    
+
     <!-- Static Transform for laser scanner (if needed) -->
     <node pkg="tf" type="static_transform_publisher" name="laser_to_base_link"
           args="0 0 0 0 0 0 base_link cloud_POS_000_DIST1 100"/>
-    
-    <!-- Bridge true_map and map with an identity transform -->
+
+    <!-- Removed the 'true_map_to_map' transform for clarity, so everything uses 'true_map' -->
     <node pkg="tf" type="static_transform_publisher" name="true_map_to_map"
           args="0 0 0 0 0 0 true_map map 100"/>
+
+    <!-- Move_base node for goal management and path planning -->
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <!-- Example inline costmap parameters -->
+      <!-- Global costmap uses 'true_map' to align with AMCL and map_server -->
+      <param name="global_costmap/global_frame" value="true_map"/>
+      <param name="global_costmap/robot_base_frame" value="base_link"/>
+      <param name="global_costmap/transform_tolerance" value="0.5"/>
+      <param name="global_costmap/update_frequency" value="5.0"/>
+      <param name="global_costmap/publish_frequency" value="1.0"/>
+      <!-- Optional: set rolling_window=false if you want a static global map -->
+      <param name="global_costmap/rolling_window" value="false"/>
+
+      <!-- Local costmap typically uses odom as the global_frame -->
+      <param name="local_costmap/global_frame" value="odom"/>
+      <param name="local_costmap/robot_base_frame" value="base_link"/>
+      <param name="local_costmap/transform_tolerance" value="0.5"/>
+      <param name="local_costmap/update_frequency" value="5.0"/>
+      <param name="local_costmap/publish_frequency" value="1.0"/>
+      <param name="local_costmap/rolling_window" value="true"/>
+
+      <!-- Planners -->
+      <param name="base_global_planner" value="navfn/NavfnROS"/>
+      <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+
+      <!-- Basic frequencies and radius -->
+      <param name="planner_frequency" value="1.0"/>
+      <param name="controller_frequency" value="10.0"/>
+      <param name="clearing_radius" value="1.0"/>
+    </node>
+
 </launch>
