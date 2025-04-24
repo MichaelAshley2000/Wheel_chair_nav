@@ -4,6 +4,14 @@
   <!-- Replace xyz/rpy with your real mounting offset          -->
   <node pkg="tf" type="static_transform_publisher"
         name="lidar_tf" args="0.15 0 0.22 0 0 0 base_link lidar_link 50"/>
+  
+  <!--comment this-->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom"
+        args="0 0 0 0 0 0 map odom"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_base_link"
+        args="0 0 0 0 0 0 odom base_link"/>
+
+  <!---->
 
   <node pkg="laser_scan_matcher" type="laser_scan_matcher_node"
       name="laser_scan_matcher_node" output="screen">
