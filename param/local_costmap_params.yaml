@@ -1,0 +1,19 @@
+local_costmap:
+  # The cost‑map follows the robot in the odom frame
+  global_frame: odom
+  robot_base_frame: base_link
+
+  update_frequency: 10.0         # 10 Hz is plenty
+  publish_frequency: 10.0
+  transform_tolerance: 0.6        # allows mild TF latency
+
+  # Rolling window around the robot (dynamic)
+  static_map: false
+  rolling_window: true            # ← makes the grid move with the robot
+
+  # Size of the window (metres)
+  width: 3.0                      #   3 m × 3 m bubble
+  height: 3.0
+  resolution: 0.05                #   5 cm cells
+
+  # ‑‑ No origin_x / origin_y in a rolling window ‑‑
