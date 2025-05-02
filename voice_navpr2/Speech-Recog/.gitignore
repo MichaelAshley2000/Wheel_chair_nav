@@ -1,0 +1,5 @@
+.env
+command.wav
+__pycache__/
+*.wav
+*.json
