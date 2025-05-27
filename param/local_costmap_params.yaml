@@ -3,18 +3,32 @@ local_costmap:
   global_frame: odom
   robot_base_frame: base_link
 
-  update_frequency: 10.0        # Increased for smoother updates
-  publish_frequency: 10.0       # Match update frequency
-  transform_tolerance: 0.3      # Reduced for better responsiveness
+  update_frequency: 5.0         # Reduced to prevent missed cycles
+  publish_frequency: 5.0        # Match update frequency
+  transform_tolerance: 0.5      # Increased for more stable transforms
+
+  plugins:
+    - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+
+  obstacle_layer:
+    observation_sources: laser_scan_sensor
+    laser_scan_sensor: {sensor_frame: cloud_POS_000_DIST1, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+    track_unknown_space: false
+    footprint_clearing_enabled: true
+
+  inflation_layer:
+    inflation_radius: 0.15
+    cost_scaling_factor: 5.0
 
   # Rolling window around the robot (dynamic)
   static_map: false
   rolling_window: true          # ← makes the grid move with the robot
 
   # Size of the window (metres) - optimized for performance
-  width: 4.0                    # Reduced from 6.0 for better performance
-  height: 4.0                   # Reduced from 6.0 for better performance
-  resolution: 0.05              # Keep 5 cm cells for accuracy
+  width: 3.0                    # Reduced for better performance
+  height: 3.0                   # Reduced for better performance
+  resolution: 0.08              # Slightly coarser resolution for better performance
 
   # Additional parameters for better collision handling
   always_send_full_costmap: false  # Changed to false for better performance

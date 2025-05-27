@@ -8,9 +8,9 @@ TebLocalPlannerROS:
  # Enables automatic resizing of the trajectory during optimization
  teb_autosize: True
  # Desired temporal resolution of the trajectory (affects computing time)
- dt_ref: 0.3
+ dt_ref: 0.4
  # Hysteresis for automatic resizing depending on the current temporal resolution
- dt_hysteresis: 0.1
+ dt_hysteresis: 0.2
  # Maximum number of samples (poses) that can be optimized
  max_samples: 500
  # Overwrite orientation of local subgoals provided by global planner
@@ -18,7 +18,7 @@ TebLocalPlannerROS:
  # If true, allows the robot to move backwards
  allow_init_with_backwards_motion: True
  # Maximum distance to look ahead on the global plan
- max_global_plan_lookahead_dist: 3.0
+ max_global_plan_lookahead_dist: 4.0
  # If positive: extract via-points from the global plan (disabled with -1)
  global_plan_viapoint_sep: -1
  # Distance threshold to prune global plan
@@ -26,24 +26,24 @@ TebLocalPlannerROS:
  # If true: calculate the actual arc length (more accurate but slower)
  exact_arc_length: False
  # Number of poses ahead to check path feasibility
- feasibility_check_no_poses: 5
+ feasibility_check_no_poses: 3
  # Publish planner feedback for visualization
  publish_feedback: True
     
  # Robot Configuration Parameters
  # ---------------------------
  # Maximum forward velocity (meters/sec)
- max_vel_x: 1.5
+ max_vel_x: 0.8
  # Maximum backwards velocity (meters/sec)
- max_vel_x_backwards: 1
+ max_vel_x_backwards: 0.5
  # Maximum strafing velocity (should be 0 for non-holonomic robots)
  max_vel_y: 0.0
  # Maximum rotational velocity (rad/sec)
- max_vel_theta: 1
+ max_vel_theta: 0.8
  # Maximum forward acceleration
- acc_lim_x: 0.6
+ acc_lim_x: 0.4
  # Maximum rotational acceleration
- acc_lim_theta: 0.6
+ acc_lim_theta: 0.4
  # Minimum turning radius (0 for differential drive robots)
  min_turning_radius: 0.0
 
@@ -85,7 +85,7 @@ TebLocalPlannerROS:
  # Obstacle Association Parameters
  # ---------------------------
  # Small safety margin for distances
- penalty_epsilon: 0.1
+ penalty_epsilon: 0.05
  # Force considering obstacles that are further away
  obstacle_association_force_inclusion_factor: 1.5
  # Cut-off factor for taking obstacles into account
@@ -100,9 +100,9 @@ TebLocalPlannerROS:
  # Optimization Parameters
  # --------------------
  # Number of solver iterations called in each outerloop
- no_inner_iterations: 5
+ no_inner_iterations: 8
  # Number of outer iterations for optimization
- no_outer_iterations: 4
+ no_outer_iterations: 6
  # Activate optimization
  optimization_activate: True
  # Print verbose optimization info
