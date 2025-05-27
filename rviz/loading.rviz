@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /Map2
+        - /Map3
       Splitter Ratio: 0.5
     Tree Height: 696
   - Class: rviz/Selection
@@ -113,6 +114,16 @@ Visualization Manager:
       Topic: /particlecloud
       Unreliable: false
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: raw
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /move_base/global_costmap/costmap
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -141,7 +152,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 21.165485382080078
+      Distance: 8.868735313415527
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -177,5 +188,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1908
-  X: 0
-  Y: 0
+  X: -32
+  Y: -32

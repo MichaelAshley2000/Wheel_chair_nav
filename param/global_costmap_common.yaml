@@ -1,4 +1,4 @@
 transform_tolerance: 0.8
-robot_radius: 0.105
-inflation_radius: 1.0
+robot_radius: 0.34
+inflation_radius: 0.2
 # no observation_sources line here

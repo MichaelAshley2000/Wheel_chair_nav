@@ -3,17 +3,20 @@ local_costmap:
   global_frame: odom
   robot_base_frame: base_link
 
-  update_frequency: 10.0         # 10 Hz is plenty
-  publish_frequency: 10.0
-  transform_tolerance: 0.6        # allows mild TF latency
+  update_frequency: 10.0        # Increased for smoother updates
+  publish_frequency: 10.0       # Match update frequency
+  transform_tolerance: 0.3      # Reduced for better responsiveness
 
   # Rolling window around the robot (dynamic)
   static_map: false
-  rolling_window: true            # ← makes the grid move with the robot
+  rolling_window: true          # ← makes the grid move with the robot
 
-  # Size of the window (metres)
-  width: 3.0                      #   3 m × 3 m bubble
-  height: 3.0
-  resolution: 0.05                #   5 cm cells
+  # Size of the window (metres) - optimized for performance
+  width: 4.0                    # Reduced from 6.0 for better performance
+  height: 4.0                   # Reduced from 6.0 for better performance
+  resolution: 0.05              # Keep 5 cm cells for accuracy
+
+  # Additional parameters for better collision handling
+  always_send_full_costmap: false  # Changed to false for better performance
 
   # ‑‑ No origin_x / origin_y in a rolling window ‑‑

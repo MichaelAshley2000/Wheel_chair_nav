@@ -1,12 +1,12 @@
 obstacle_range:    3.0
 raytrace_range:    3.5
-inflation_radius:  1.0
-cost_scaling_factor: 3.0
+inflation_radius:  0.2
+cost_scaling_factor: 15.0
 footprint:
-  - [-0.105, -0.105]
-  - [-0.105,  0.105]
-  - [ 0.041,  0.105]
-  - [ 0.041, -0.105]
+  - [-0.35, -0.4625]  # Back-right corner
+  - [-0.35,  0.4625]  # Back-left corner
+  - [ 0.35,  0.4625]  # Front-left corner
+  - [ 0.35, -0.4625]  # Front-right corner
 observation_sources: laser_scan_sensor
 laser_scan_sensor:
   sensor_frame: cloud_POS_000_DIST1

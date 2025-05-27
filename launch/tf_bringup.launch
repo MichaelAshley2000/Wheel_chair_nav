@@ -15,7 +15,7 @@
 
   <!-- 3) Publish base_link → laser -->
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
-        args="0 0 0 0 0 0 base_link cloud_POS_000_DIST1 100"/>
+        args="0.45 0 0 0 0 0 base_link cloud_POS_000_DIST1 100"/>
 
   <!-- 4) (Optional) Laser Scan Matcher as odom → base_link -->
   <group if="$(arg use_scan_matcher)">

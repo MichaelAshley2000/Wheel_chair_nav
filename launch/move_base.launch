@@ -6,12 +6,15 @@
   <!-- move_base -->
   <node pkg="move_base" type="move_base" name="move_base" output="screen">
 
+    <!-- Set TEB as the local planner -->
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
     <!-- Costmap + planner parameter files (create these in config/) -->
     <rosparam file="$(find robot_project_tmp)/param/costmap_common_params.yaml"  command="load" ns="global_costmap"/>
     <rosparam file="$(find robot_project_tmp)/param/costmap_common_params.yaml"  command="load" ns="local_costmap"/>
     <rosparam file="$(find robot_project_tmp)/param/local_costmap_params.yaml"   command="load"/>
     <rosparam file="$(find robot_project_tmp)/param/global_costmap_params.yaml"  command="load"/>
-    <rosparam file="$(find robot_project_tmp)/param/dwa_local_planner_params.yaml"     command="load"/>
+    <rosparam file="$(find robot_project_tmp)/param/teb_local_planner_params.yaml"     command="load"/>
     <rosparam file="$(find robot_project_tmp)/param/move_base_params.yaml"       command="load"/>
 
     <!-- Topic remaps -->
@@ -19,6 +22,6 @@
     <remap from="odom"    to="$(arg odom_topic)"/>
 
     <!-- Optional: forbid backing up if requested -->
-    <param unless="$(arg move_forward_only)" name="DWAPlannerROS/min_vel_x" value="0.0"/>
+    <param unless="$(arg move_forward_only)" name="TebLocalPlannerROS/max_vel_x_backwards" value="0.0"/>
   </node>
 </launch>

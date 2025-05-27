@@ -1,26 +1,66 @@
-# Shared settings for both global & local costmaps
-obstacle_range: 3.0
-raytrace_range: 3.5
+# Common Costmap Parameters (Shared between Global and Local Costmaps)
+# --------------------------------------------------------------------
 
-# Robot footprint (in base_link frame)
+# Sensor Range Parameters
+# ---------------------
+# Maximum range at which to insert obstacles into the costmap
+obstacle_range: 4.0
+# Maximum range at which to ray-trace out obstacles from the map
+raytrace_range: 4.5
+
+# Robot Footprint Definition
+# -----------------------
+# The footprint is defined as a polygon with [x,y] coordinates
+# Origin is at the robot's center (base_link frame)
+# Coordinates are in meters:
+# - X axis: positive forward, negative backward
+# - Y axis: positive left, negative right
+# Wheelchair dimensions: 85cm width × 60cm length
 footprint:
-  - [-0.105, -0.105]
-  - [-0.105,  0.105]
-  - [ 0.041,  0.105]
-  - [ 0.041, -0.105]
+  - [-0.35, -0.425]  # Back-right corner
+  - [-0.35,  0.425]  # Back-left corner
+  - [ 0.35,  0.425]  # Front-left corner
+  - [ 0.35, -0.425]  # Front-right corner
 
-inflation_radius: 1.0
-cost_scaling_factor: 3.0
+# Costmap Cell Properties
+# ---------------------
+# Radius around obstacles where cost is incurred (in meters)
+inflation_radius: 0.3
+# Factor to scale the exponential decay of inflation costs
+# Lower values = higher cost near obstacles
+cost_scaling_factor: 10.0
 
+# Costmap Type Configuration
+# ------------------------
+# Type of map (voxel grid or costmap)
 map_type: costmap
 
-# Which sensors to use
+# Sensor Configuration
+# ------------------
+# List of sensor sources to process
 observation_sources: laser_scan_sensor
-laser_scan_sensor:
-  sensor_frame: cloud_POS_000_DIST1
-  data_type: LaserScan
-  topic: /scan
-  marking: true
-  clearing: true
 
-transform_tolerance: 0.8
+# Laser Scanner Configuration
+# ------------------------
+laser_scan_sensor:
+  sensor_frame: cloud_POS_000_DIST1  # Frame ID of the sensor
+  data_type: LaserScan               # Type of sensor data
+  topic: /scan                       # ROS topic for sensor data
+  marking: true                      # Whether to mark obstacles
+  clearing: true                     # Whether to clear obstacles
+  min_obstacle_height: -0.1          # Minimum height for obstacles
+  max_obstacle_height: 2.0           # Maximum height for obstacles
+
+# Transform Configuration
+# --------------------
+# Maximum time to wait for transforms to be available
+transform_tolerance: 1.0
+
+# Additional Safety Parameters
+# -------------------------
+# Whether to track unknown space
+track_unknown_space: false
+# Cost at which obstacles are considered lethal (impassable)
+lethal_cost_threshold: 100
+# Cost assigned to unknown cells
+unknown_cost_value: 0

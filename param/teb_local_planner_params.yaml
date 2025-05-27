@@ -1,0 +1,200 @@
+TebLocalPlannerROS:
+
+ # Topic from which to read odometry information
+ odom_topic: odom
+    
+ # Trajectory Generation Parameters
+ # ------------------------------
+ # Enables automatic resizing of the trajectory during optimization
+ teb_autosize: True
+ # Desired temporal resolution of the trajectory (affects computing time)
+ dt_ref: 0.3
+ # Hysteresis for automatic resizing depending on the current temporal resolution
+ dt_hysteresis: 0.1
+ # Maximum number of samples (poses) that can be optimized
+ max_samples: 500
+ # Overwrite orientation of local subgoals provided by global planner
+ global_plan_overwrite_orientation: True
+ # If true, allows the robot to move backwards
+ allow_init_with_backwards_motion: True
+ # Maximum distance to look ahead on the global plan
+ max_global_plan_lookahead_dist: 3.0
+ # If positive: extract via-points from the global plan (disabled with -1)
+ global_plan_viapoint_sep: -1
+ # Distance threshold to prune global plan
+ global_plan_prune_distance: 1
+ # If true: calculate the actual arc length (more accurate but slower)
+ exact_arc_length: False
+ # Number of poses ahead to check path feasibility
+ feasibility_check_no_poses: 5
+ # Publish planner feedback for visualization
+ publish_feedback: True
+    
+ # Robot Configuration Parameters
+ # ---------------------------
+ # Maximum forward velocity (meters/sec)
+ max_vel_x: 0.3
+ # Maximum backwards velocity (meters/sec)
+ max_vel_x_backwards: 0.15
+ # Maximum strafing velocity (should be 0 for non-holonomic robots)
+ max_vel_y: 0.0
+ # Maximum rotational velocity (rad/sec)
+ max_vel_theta: 0.5
+ # Maximum forward acceleration
+ acc_lim_x: 0.5
+ # Maximum rotational acceleration
+ acc_lim_theta: 0.5
+ # Minimum turning radius (0 for differential drive robots)
+ min_turning_radius: 0.0
+
+ # Robot Footprint Model
+ # -------------------
+ footprint_model:
+   type: "polygon"
+   # Vertices of the robot footprint (counterclockwise) [x,y] pairs
+   vertices: [[-0.35, -0.425], [-0.35, 0.425], [0.35, 0.425], [0.35, -0.425]]
+
+ # Goal Tolerance Parameters
+ # ----------------------
+ # Allowed final euclidean distance to the goal position
+ xy_goal_tolerance: 0.2
+ # Allowed final orientation error to the goal
+ yaw_goal_tolerance: 0.3
+ # Allow free goal velocity in the goal state
+ free_goal_vel: False
+ # Requires the entire path until the goal to be free of obstacles
+ complete_global_plan: True
+    
+ # Obstacle Parameters
+ # -----------------
+ # Minimum distance to obstacles
+ min_obstacle_dist: 0.15
+ # Buffer zone around obstacles for inflation
+ inflation_dist: 0.3
+ # Additional buffer for dynamic obstacles
+ dynamic_obstacle_inflation_dist: 0.3
+ # Consider dynamic obstacles in planning
+ include_dynamic_obstacles: True
+ # Consider obstacles from costmap
+ include_costmap_obstacles: True
+ # Distance behind robot to still consider obstacles
+ costmap_obstacles_behind_robot_dist: 1.5
+ # Number of poses affected by dynamic obstacles
+ obstacle_poses_affected: 15
+
+ # Obstacle Association Parameters
+ # ---------------------------
+ # Small safety margin for distances
+ penalty_epsilon: 0.1
+ # Force considering obstacles that are further away
+ obstacle_association_force_inclusion_factor: 1.5
+ # Cut-off factor for taking obstacles into account
+ obstacle_association_cutoff_factor: 5.0
+ # Plugin name for converting costmap cells to points
+ costmap_converter_plugin: ""
+ # Spin up a thread for costmap conversion
+ costmap_converter_spin_thread: True
+ # Rate at which to update the costmap conversion
+ costmap_converter_rate: 5
+
+ # Optimization Parameters
+ # --------------------
+ # Number of solver iterations called in each outerloop
+ no_inner_iterations: 5
+ # Number of outer iterations for optimization
+ no_outer_iterations: 4
+ # Activate optimization
+ optimization_activate: True
+ # Print verbose optimization info
+ optimization_verbose: False
+ # Weight for maximum forward velocity
+ weight_max_vel_x: 2
+ # Weight for maximum rotational velocity
+ weight_max_vel_theta: 1
+ # Weight for maximum acceleration
+ weight_acc_lim_x: 1
+ # Weight for maximum rotational acceleration
+ weight_acc_lim_theta: 1
+ # Weight for satisfying non-holonomic constraints
+ weight_kinematics_nh: 1000
+ # Prefer forward motions
+ weight_kinematics_forward_drive: 1
+ # Weight for minimum turning radius
+ weight_kinematics_turning_radius: 1
+ # Weight for optimizing path execution time
+ weight_optimaltime: 1
+ # Weight for shortest path (not recommended - use 0)
+ weight_shortest_path: 0
+ # Weight for keeping distance from obstacles
+ weight_obstacle: 20
+ # Weight for inflation
+ weight_inflation: 0.2
+ # Weight for dynamic obstacles
+ weight_dynamic_obstacle: 10
+ # Weight for dynamic obstacle inflation
+ weight_dynamic_obstacle_inflation: 0.2
+ # Weight for following via-points
+ weight_viapoint: 1
+ # Factor to increase weights during optimization
+ weight_adapt_factor: 2
+
+ # Recovery Behavior Parameters
+ # -------------------------
+ # Try to reduce horizon if stuck
+ shrink_horizon_backup: True
+ # Minimum duration for the reduced horizon
+ shrink_horizon_min_duration: 10
+ # Try to detect and resolve oscillations
+ oscillation_recovery: True
+ # Threshold for detecting x oscillations
+ oscillation_v_eps: 0.1
+ # Threshold for detecting yaw oscillations
+ oscillation_omega_eps: 0.1
+ # Minimum duration before considering oscillation
+ oscillation_recovery_min_duration: 10
+ # Duration for filtering oscillations
+ oscillation_filter_duration: 10
+
+ # Homotopy Class Planner Parameters
+ # ------------------------------
+ # Enable exploration of alternative trajectories
+ enable_homotopy_class_planning: False
+ # Enable parallel planning
+ enable_multithreading: True
+ # Maximum number of trajectory classes
+ max_number_classes: 2
+ # Hysteresis for switching between trajectories
+ selection_cost_hysteresis: 1.0
+ # Prefer the initial plan
+ selection_prefer_initial_plan: 0.95
+ # Scale factor for obstacle costs
+ selection_obst_cost_scale: 100.0
+ # Consider alternative time parameterization
+ selection_alternative_time_cost: False
+ 
+ # Roadmap Generation Parameters
+ # --------------------------
+ # Number of samples for roadmap generation
+ roadmap_graph_no_samples: 10
+ # Width of the area for sampling
+ roadmap_graph_area_width: 3
+ # Length scale of the area for sampling
+ roadmap_graph_area_length_scale: 1.0
+ # Prescaler for H-signature calculation
+ h_signature_prescaler: 0.5
+ # Threshold for H-signature calculation
+ h_signature_threshold: 0.1
+ # Threshold for obstacle heading
+ obstacle_heading_threshold: 0.45
+ # Duration to block switching between trajectories
+ switching_blocking_period: 0.0
+ # Consider all trajectory candidates
+ viapoints_all_candidates: True
+ # Delete backwards detours
+ delete_detours_backwards: True
+ # Maximum ratio for detour duration
+ max_ratio_detours_duration_best_duration: 3.0
+ # Visualize H-signature graph
+ visualize_hc_graph: False
+ # Visualize with time as z-axis
+ visualize_with_time_as_z_axis_scale: False 

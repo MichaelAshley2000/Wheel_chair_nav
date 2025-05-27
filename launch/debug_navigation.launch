@@ -1,0 +1,43 @@
+<launch>
+  <arg name="cmd_vel_topic"      default="cmd_vel"/>
+  <arg name="odom_topic"         default="odom"/>
+  <arg name="move_forward_only"  default="false"/>
+
+  <!-- move_base with debug parameters -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+
+    <!-- Set TEB as the local planner -->
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+    <!-- Costmap + planner parameter files -->
+    <rosparam file="$(find robot_project_tmp)/param/costmap_common_params.yaml"  command="load" ns="global_costmap"/>
+    <rosparam file="$(find robot_project_tmp)/param/costmap_common_params.yaml"  command="load" ns="local_costmap"/>
+    <rosparam file="$(find robot_project_tmp)/param/local_costmap_params.yaml"   command="load"/>
+    <rosparam file="$(find robot_project_tmp)/param/global_costmap_params.yaml"  command="load"/>
+    <rosparam file="$(find robot_project_tmp)/param/teb_local_planner_params.yaml"     command="load"/>
+    <rosparam file="$(find robot_project_tmp)/param/move_base_params.yaml"       command="load"/>
+
+    <!-- Debug parameters to reduce false collisions -->
+    <param name="recovery_behavior_enabled" value="true"/>
+    <param name="clearing_rotation_allowed" value="true"/>
+    <param name="max_planning_retries" value="3"/>
+    <param name="planner_frequency" value="3.0"/>
+    <param name="controller_frequency" value="15.0"/>
+    
+    <!-- Make costmap clearing less aggressive -->
+    <param name="conservative_reset_dist" value="1.0"/>
+    <param name="clearing_radius" value="1.0"/>
+    
+    <!-- Topic remaps -->
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom"    to="$(arg odom_topic)"/>
+
+    <!-- Optional: forbid backing up if requested -->
+    <param unless="$(arg move_forward_only)" name="TebLocalPlannerROS/max_vel_x_backwards" value="0.0"/>
+  </node>
+
+  <!-- Publish static transform if needed for debugging -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser"
+        args="0 0 0 0 0 0 base_link cloud_POS_000_DIST1" />
+
+</launch> 
