@@ -25,10 +25,10 @@ footprint:
 # Costmap Cell Properties
 # ---------------------
 # Radius around obstacles where cost is incurred (in meters)
-inflation_radius: 0.3
+inflation_radius: 0.15
 # Factor to scale the exponential decay of inflation costs
 # Lower values = higher cost near obstacles
-cost_scaling_factor: 10.0
+cost_scaling_factor: 5.0
 
 # Costmap Type Configuration
 # ------------------------

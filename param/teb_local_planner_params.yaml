@@ -33,17 +33,17 @@ TebLocalPlannerROS:
  # Robot Configuration Parameters
  # ---------------------------
  # Maximum forward velocity (meters/sec)
- max_vel_x: 0.3
+ max_vel_x: 1.5
  # Maximum backwards velocity (meters/sec)
- max_vel_x_backwards: 0.15
+ max_vel_x_backwards: 1
  # Maximum strafing velocity (should be 0 for non-holonomic robots)
  max_vel_y: 0.0
  # Maximum rotational velocity (rad/sec)
- max_vel_theta: 0.5
+ max_vel_theta: 1
  # Maximum forward acceleration
- acc_lim_x: 0.5
+ acc_lim_x: 0.6
  # Maximum rotational acceleration
- acc_lim_theta: 0.5
+ acc_lim_theta: 0.6
  # Minimum turning radius (0 for differential drive robots)
  min_turning_radius: 0.0
 
@@ -68,11 +68,11 @@ TebLocalPlannerROS:
  # Obstacle Parameters
  # -----------------
  # Minimum distance to obstacles
- min_obstacle_dist: 0.15
+ min_obstacle_dist: 0.1
  # Buffer zone around obstacles for inflation
- inflation_dist: 0.3
+ inflation_dist: 0.1
  # Additional buffer for dynamic obstacles
- dynamic_obstacle_inflation_dist: 0.3
+ dynamic_obstacle_inflation_dist: 0.1
  # Consider dynamic obstacles in planning
  include_dynamic_obstacles: True
  # Consider obstacles from costmap
@@ -168,7 +168,7 @@ TebLocalPlannerROS:
  # Prefer the initial plan
  selection_prefer_initial_plan: 0.95
  # Scale factor for obstacle costs
- selection_obst_cost_scale: 100.0
+ selection_obst_cost_scale: 1
  # Consider alternative time parameterization
  selection_alternative_time_cost: False
  
