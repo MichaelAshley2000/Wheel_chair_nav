@@ -39,11 +39,11 @@ TebLocalPlannerROS:
  # Maximum strafing velocity (should be 0 for non-holonomic robots)
  max_vel_y: 0.0
  # Maximum rotational velocity (rad/sec)
- max_vel_theta: 0.8
+ max_vel_theta: 1
  # Maximum forward acceleration
  acc_lim_x: 0.4
  # Maximum rotational acceleration
- acc_lim_theta: 0.4
+ acc_lim_theta: 0.8
  # Minimum turning radius (0 for differential drive robots)
  min_turning_radius: 0.0
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- ─────────── User‑tunable arguments ─────────── -->
-  <arg name="map_file"          default="$(find robot_project_tmp)/maps/fyr_clean.yaml"/>
+  <arg name="map_file"          default="$(find robot_project_tmp)/maps/fyr3.yaml"/>
   <arg name="open_rviz"         default="true"/>
   <arg name="scan_topic"        default="scan"/>
   <arg name="cmd_vel_topic"     default="cmd_vel"/>
