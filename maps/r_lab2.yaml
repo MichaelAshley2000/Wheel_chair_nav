@@ -1,4 +1,4 @@
-image: /home/pamithros11/catkin_ws/src/sick_scan_xd/maps/r_lab2.pgm
+image: /home/nimesh/catkin_ws/src/robot_project_tmp/maps/r_lab2.pgm
 resolution: 0.05000
 origin: [-50, -50, 0.000000]
 negate: 0
