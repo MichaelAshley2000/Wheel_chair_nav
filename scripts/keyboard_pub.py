@@ -39,9 +39,9 @@ def keyboard_control():
                     twist.linear.x = speed_linear
                 elif key == 's':
                     twist.linear.x = -speed_linear
-                elif key == 'd':
-                    twist.angular.z = speed_angular
                 elif key == 'a':
+                    twist.angular.z = speed_angular
+                elif key == 'd':
                     twist.angular.z = -speed_angular
                 elif key == 'e':
                     # <-- Light up LED on Arduino

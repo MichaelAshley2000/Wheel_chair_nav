@@ -3,7 +3,7 @@
   <!-- ─────── 2. Static TF   (base_link → lidar_link) ─────── -->
   <!-- Replace xyz/rpy with your real mounting offset          -->
   <node pkg="tf" type="static_transform_publisher"
-        name="lidar_tf" args="0.45 0 0 0 0 0 base_link lidar_link 50"/>
+        name="lidar_broadcaster" args="0.5 0.0 0.1 0 0 0 base_link laser_frame 100"/>
   
   <!--comment this-->
   <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom"
